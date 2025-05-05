@@ -4,114 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AdSite Doctor – Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f7f9fc;
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 30px 20px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #1f3a60;
-    }
-
-    form {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      margin-bottom: 30px;
-    }
-
-    input[type="file"],
-    input[type="submit"] {
-      display: block;
-      width: 100%;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-    }
-
-    input[type="submit"] {
-      background-color: #1f78ff;
-      color: white;
-      cursor: pointer;
-      border: none;
-      font-weight: 600;
-    }
-
-    .card {
-      background-color: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      padding: 20px;
-      margin-bottom: 30px;
-    }
-
-    .score {
-      font-size: 40px;
-      font-weight: 700;
-      color: #1f78ff;
-      margin: 0;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th, td {
-      text-align: left;
-      padding: 8px;
-      border-bottom: 1px solid #eee;
-    }
-
-    ul {
-      padding-left: 20px;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="container">
-    <h1>AdSite Doctor – Dashboard</h1>
+<body class="bg-gray-100 text-gray-800 font-sans">
 
-    <form method="POST" enctype="multipart/form-data">
-      <label><strong>📤 Upload do CSV da Campanha:</strong></label>
-      <input type="file" name="campaign_file" required>
-      <input type="submit" value="Analisar">
+  <div class="max-w-4xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold text-center text-blue-700 mb-8">AdSite Doctor – Dashboard</h1>
+
+    <!-- Formulário de Upload -->
+    <form method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded-lg p-6 mb-8">
+      <label class="block text-lg font-medium mb-2">📤 Upload do CSV da Campanha:</label>
+      <input type="file" name="campaign_file" required class="w-full border border-gray-300 rounded-md p-2 mb-4">
+
+      <input type="submit" value="Analisar" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition">
     </form>
 
     {% if data %}
-      <div class="card">
-        <h2>Nota Geral</h2>
-        <p class="score">{{ data.score }}/100</p>
+      <!-- Nota Geral -->
+      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-2">Nota Geral</h2>
+        <p class="text-4xl text-blue-600 font-bold">{{ data.score }}/100</p>
       </div>
 
-      <div class="card">
-        <h3>🎯 Análise de Anúncios</h3>
-        <p><strong>CTR Médio:</strong> {{ data.avg_ctr }}</p>
-        <p><strong>CPC Médio:</strong> {{ data.avg_cpc }}</p>
-        {{ data.ads_table | safe }}
+      <!-- Análise de Anúncios -->
+      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h3 class="text-lg font-semibold mb-2">🎯 Análise de Anúncios</h3>
+        <p class="mb-1"><strong>CTR Médio:</strong> {{ data.avg_ctr }}</p>
+        <p class="mb-4"><strong>CPC Médio:</strong> {{ data.avg_cpc }}</p>
+
+        <div class="overflow-x-auto">
+          {{ data.ads_table | safe }}
+        </div>
       </div>
 
-      <div class="card">
-        <h3>🛠️ Ações Recomendadas</h3>
-        <ul>
+      <!-- Ações Recomendadas -->
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <h3 class="text-lg font-semibold mb-2">🛠️ Ações Recomendadas</h3>
+        <ul class="list-disc list-inside space-y-1">
           {% for item in data.suggestions %}
             <li>{{ item }}</li>
           {% endfor %}
@@ -119,5 +48,24 @@
       </div>
     {% endif %}
   </div>
+
+  <!-- Estilo para tabelas renderizadas dinamicamente -->
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    th {
+      background-color: #f3f4f6;
+      font-weight: 600;
+    }
+  </style>
 </body>
 </html>
