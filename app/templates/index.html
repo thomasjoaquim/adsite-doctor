@@ -1,11 +1,23 @@
-<!doctype html>
-<html>
-  <head><title>Upload CSV</title></head>
-  <body>
-    <h2>Upload Facebook/Google Ads CSV</h2>
-    <form method="post" enctype="multipart/form-data">
-      <input type="file" name="file">
-      <input type="submit" value="Upload">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AdSite Doctor – Início</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <div class="max-w-2xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold text-center text-blue-700 mb-8">Bem-vindo ao AdSite Doctor</h1>
+
+    <form method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded-lg p-6">
+      <label class="block text-lg font-medium mb-2">📁 Upload de Arquivo CSV:</label>
+      <input type="file" name="file" required class="w-full border border-gray-300 rounded-md p-2 mb-4">
+
+      <input type="submit" value="Analisar Desempenho" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition">
     </form>
-  </body>
+  </div>
+
+</body>
 </html>
