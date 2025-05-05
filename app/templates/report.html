@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: 'Arial'; margin: 30px; }
+    h1, h2 { color: #1f3a60; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 8px; border: 1px solid #ccc; font-size: 14px; }
+    .section { margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <h1>Relatório de Análise de Campanha</h1>
+
+  <div class="section">
+    <h2>🎯 Desempenho Geral</h2>
+    <p><strong>Nota Geral:</strong> {{ score }}/100</p>
+    <p><strong>CTR Médio:</strong> {{ avg_ctr }}</p>
+    <p><strong>CPC Médio:</strong> {{ avg_cpc }}</p>
+  </div>
+
+  <div class="section">
+    <h2>📊 Tabela de Anúncios</h2>
+    {{ ads_table | safe }}
+  </div>
+
+  <div class="section">
+    <h2>🔧 Sugestões de Melhoria</h2>
+    <ul>
+      {% for item in suggestions %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>

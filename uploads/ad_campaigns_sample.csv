@@ -1,0 +1,4 @@
+ad_id,title,CTR,CPC,impressions,conversions
+1,Ad 1,0.08,0.25,1000,10
+2,Ad 2,0.02,0.7,1200,3
+3,Ad 3,0.05,0.3,1500,5
