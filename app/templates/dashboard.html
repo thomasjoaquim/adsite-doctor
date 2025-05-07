@@ -2,70 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AdSite Doctor – Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Análise de Anúncio</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans">
 
-  <div class="max-w-4xl mx-auto px-4 py-10">
-    <h1 class="text-3xl font-bold text-center text-blue-700 mb-8">AdSite Doctor – Dashboard</h1>
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold text-blue-700 mb-6">Painel de Análise de Anúncios</h1>
 
-    <!-- Formulário de Upload -->
-    <form method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded-lg p-6 mb-8">
-      <label class="block text-lg font-medium mb-2">📤 Upload do CSV da Campanha:</label>
-      <input type="file" name="campaign_file" required class="w-full border border-gray-300 rounded-md p-2 mb-4">
-
-      <input type="submit" value="Analisar" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition">
+    <form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow mb-8">
+      <label class="block text-lg font-semibold mb-2">Carregar relatório (.csv ou .xlsx)</label>
+      <input type="file" name="campaign_file" required class="block w-full mb-4 border border-gray-300 rounded p-2">
+      <button type="submit" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
+        Analisar
+      </button>
     </form>
 
     {% if data %}
-      <!-- Nota Geral -->
-      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h2 class="text-xl font-semibold mb-2">Nota Geral</h2>
-        <p class="text-4xl text-blue-600 font-bold">{{ data.score }}/100</p>
-      </div>
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-bold text-gray-700 mb-4">Resumo da Campanha</h2>
+      <ul class="mb-6 space-y-1">
+        <li><strong>CTR médio:</strong> {{ data.avg_ctr }}%</li>
+        <li><strong>CPC médio:</strong> R$ {{ data.avg_cpc }}</li>
+        <li><strong>Score da campanha:</strong> {{ data.score }}/100</li>
+      </ul>
 
-      <!-- Análise de Anúncios -->
-      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h3 class="text-lg font-semibold mb-2">🎯 Análise de Anúncios</h3>
-        <p class="mb-1"><strong>CTR Médio:</strong> {{ data.avg_ctr }}</p>
-        <p class="mb-4"><strong>CPC Médio:</strong> {{ data.avg_cpc }}</p>
+      {% if data.suggestions %}
+      <h3 class="text-lg font-semibold text-gray-600 mb-2">Sugestões:</h3>
+      <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
+        {% for suggestion in data.suggestions %}
+        <li>{{ suggestion }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
 
-        <div class="overflow-x-auto">
-          {{ data.ads_table | safe }}
-        </div>
+      <div class="overflow-x-auto">
+        {{ data.ads_table|safe }}
       </div>
-
-      <!-- Ações Recomendadas -->
-      <div class="bg-white shadow-md rounded-lg p-6">
-        <h3 class="text-lg font-semibold mb-2">🛠️ Ações Recomendadas</h3>
-        <ul class="list-disc list-inside space-y-1">
-          {% for item in data.suggestions %}
-            <li>{{ item }}</li>
-          {% endfor %}
-        </ul>
-      </div>
+    </div>
     {% endif %}
+
   </div>
 
-  <!-- Estilo para tabelas renderizadas dinamicamente -->
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-
-    th, td {
-      padding: 0.75rem;
-      border: 1px solid #e5e7eb;
-    }
-
-    th {
-      background-color: #f3f4f6;
-      font-weight: 600;
-    }
-  </style>
 </body>
 </html>
